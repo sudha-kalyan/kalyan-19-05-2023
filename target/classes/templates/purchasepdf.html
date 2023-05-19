@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+
+<head>
+  <style>
+ .css-serial {
+  counter-reset: serial-number;  /* Set the serial number counter to 0 */
+}
+.css-serial td:first-child:before {
+  counter-increment: serial-number;  /* Increment the serial number counter */
+  content: counter(serial-number);  /* Display the counter */
+}
+    .row {
+      height: 100%;
+      width: 100%;
+      display: inline-block;
+      vertical-align: middle;
+      align-content: space-between;
+      align-items: center;
+    }
+
+    .col {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .col-auto {
+      flex: 0 10 auto;
+      width: auto;
+      display: inline-block;
+      vertical-align: center;
+      align-content: space-between;
+    }
+
+    table,
+    th,
+    td {
+      border: 2px solid black;
+      border-collapse: collapse;
+    }
+
+    th {
+      background-color: lightblue;
+
+    }
+
+    @page {
+      margin: 2px
+    }
+
+    /* .col-10 {
+      width: 100%;
+    }
+    .col-9 {
+      width: 90%;
+    }
+    .col-8 {
+      width: 80%;
+    }
+    .col-7 {
+      width: 70%;
+    }
+    .col-6 {
+      width: 60%;
+    }
+    .col-5 {
+      width: 50%;
+    }
+    .col-4 {
+      width: 40%;
+    }
+    .col-3 {
+      width: 30%;
+    }
+    .col-2 {
+      width: 20%;
+    }
+    .col-1 {
+      width: 10%;
+    } */
+  </style>
+  <title></title>
+</head>
+
+<body>
+<div class="row" style="text-align: left;">
+  <div class="col-auto  ">
+
+  </div>
+</div>
+<div class="row" style="text-align: center;">
+  <div class="col-auto  ">
+    <div class="row" style=" display: flex; justify-content: alegspace-between; width: 100%;">
+      <div class="col-auto "
+           style="color: green;font-weight: 600; text-align:center; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+        <h1><center><span th:text="${cp.orgName}"></span></center></h1>
+      </div>
+      <div class="col-auto "
+           style="color: blue;font-weight: 600; text-align:right; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+        <div class="row">Phone: <span th:text="${cp.orgMobile}"></span></div>
+        <div class="row">Email: <span th:text="${cp.orgEmail}"></span></div>
+      </div>
+    </div>
+    <div class="row"
+         style="color: red; font-weight: 600; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+      <span th:text="${cp.orgAddress1}"></span> <span th:text="${cp.orgAddress2}"></span> <span th:text="${cp.orgAddress3}"></span>-<span th:text="${cp.pinCode}"></span>
+    </div>
+
+  </div>
+</div>
+<hr style="height: 3px; width: 100%; background-color: blue; border-radius: 2.5px;">
+</hr>
+<div class="row" style=" display: flex; justify-content: space-between; width: 100%;">
+  <div class="col-auto" style="text-align: start; ">
+
+  </div>
+
+</div>
+<h5 style="text-align: center;">ORIGINAL FOR RECEPIENT</h5>
+<h6 style="text-align: center;">TAX INVOICE</h6>
+<table class="table" style="width: 100%;">
+  <tr>
+    <th>Customer Name and Billing Address</th>
+    <th style="display: flex; justify-content: space-around;"><span style="text-align: start;">INV NO:
+         <span th:text="${invoiceNo}"></span></span>
+      <span style="text-align: end; ">DATE:<span th:text="${po.invDate}"></span></span>
+    </th>
+  </tr>
+  <tr>
+    <td><span th:text="${sm.supAddress1}"></span><br></br>
+      <span th:text="${sm.supAddress2}"></span><br></br>
+      <span th:text="${sm.supAddress3}"></span>
+    </td>
+    <td>
+      Shipping Address<br></br>
+      <b><span th:text="${sm.shipAddress1}"></span></b><br></br>
+      <span th:text="${sm.shipAddress2}"></span><br></br>
+      <span th:text="${sm.shipAddress3}"></span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Destination : <span th:text="${sm.shipAddress2}"></span><br></br>
+      Shipping Mode : Road
+    </td>
+    <td>
+      Ref number : <span th:text="${po.poRefNo}"></span><br></br>
+      Ref Date : <span th:text="${po.poRefDate}"></span>
+    </td>
+  </tr>
+</table>
+<table style="width: 100%" class="css-serial">
+  <thead>
+  <tr>
+    <th>S.No</th>
+    <th>Description</th>
+    <th>Fat</th>
+    <th>SNF</th>
+    <th>Qty</th>
+    <th>Unit</th>
+    <th>Item Rate</th>
+    <th>Item Value</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="por : ${po}">
+    <td>  </td>
+    <td>Raw Chilled Cow Milk: <br></br>
+      Rate : <span th:text="${por.tsRate}"></span> LtrTs
+
+    </td>
+<!--    <td> <span th:text="${por.milkType}"></span>-->
+
+    <td ><span th:text="${por.fatP}"></span></td>
+    <td><span th:text="${por.snfP}"></span></td>
+    <td><span th:text="${por.quantity}"></span></td>
+    <td>Litre</td>
+    <td><span th:text="${por.ltrRate}"></span></td>
+    <td ><span th:text="${por.amt}"></span></td>
+  </tr>
+  </tbody>
+</table>
+<table style="width: 100%; ">
+  <tr>
+    <td>Total</td><td><span th:text="${po.totAmtRound}"></span></td>
+
+  </tr>
+  <tr>
+    <td>Bill Amount in Words INR :<span th:text="${words}"></span>only</td>
+    <td> <b>Sub Total</b> : Round Off <br></br>
+      Bill Total : <span th:text="${po.totAmtRound}"></span>
+    </td>
+  </tr>
+</table>
+<table style="width: 100%; height:100%;">
+  <tr>
+    <td>
+      <h3>Bank Details : </h3>
+    <br></br>
+      Shipping Company : <span th:text="${cp.orgName}"></span><br></br>
+      Account Number : <span th:text="${cp.orgBankAcctNo}"></span><br></br>
+      Bank Name : <span th:text="${cp.orgBankName}"></span><br></br>
+      IFSC Code : <span th:text="${cp.orgBankIFSC}"></span><br></br>
+      Branch : <span th:text="${cp.orgBankBranch}"></span><br></br></td>
+
+  </tr>
+</table>
+<table style="width: 100%; height=100%">
+  <tr>
+    <td style="border: 0px;"><b>
+      <h3>Declaration : </h3>
+    </b><br></br>We declare that this invoice shows the actual price of the goods described and that all particulars
+      are true and correct
+    </td>
+    <td style="border: 0px;"><b>For L S MILK TRADERS</b><br></br></td>
+  </tr>
+  <tr>
+    <td style="border: 0px; text-align: center;">
+      Composition taxable person, not eligible to collect tax on supplies
+    </td>
+    <td style="border: 0px; text-align: center;">
+      Authorized Signotary
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+<div class="invoice-footer">
+  <p><b><center>Branch Office:H.No:48-11/1-5/8B,Floor1,Vallabhaneni Arcade,Guttikonda Dhanjuya Rao Street Currency Nagar,Vijayawada-520008-Andhra Pradesh</center></b></p>
+</div>
+</body>
+<script>
+$('#submit').click(function() {
+var purchaseOrder = [];
+<!--var slNo=$("#slNo").html();-->
+//alert(slNo);
+var invDate=$("#invDate").val();
+//alert(invDate);
+var supplierName=$("#supplierName").val();
+//alert(supplierName);
+var vehNumber=$("#vehNumber").val();
+//alert(vehicleNo);
+var milkType= $("#milkType").val();
+//alert(milkType);
+var quantity=$("#quantity").val();
+//alert(quantity);
+var fatP= $("#fatP").val();
+//alert(fatP);
+var snfP = $("#snfP").val();
+//alert(snfP);
+var tsRate= $("#tsRate").val();
+//alert(tsRate);
+var ltrRate=$("#ltrRate").text();
+//alert(ltrRate);
+var amt=$("#amt").text();
+//alert(amt);
+var ifsc= $("#ifsc").val();
+//alert(ifsc);
+var bankIfsc=ifsc;
+//alert(bankIfsc);
+var paymentStatus= $("#paymentStatus").val();
+//alert( paymentStatus);
+var recDate= $("#recDate").val();
+//alert( recDate);
+<!--//var code= $("#code").val();-->
+<!--//alert(code);-->
+var supplierCode=$("#supplierCode").val();
+//alert(supplierCode);
+var suplCode= supplierCode;
+//alert(suplCode);
+<!--var code=supplierCode;-->
+<!--alert(code);-->
+<!--var orderNo=$("#orderNo").html();-->
+<!--alert(orderNo);-->
+var bankrefno=$("#bankrefno").val();
+//alert(bankrefno);
+var InvType=$("#InvType").val();
+//alert(InvType);
+var Tmode=$("#Tmode").val();
+//alert(Tmode);
+var Unit=$("#Unit").val();
+//alert(Unit);
+var PoRefNo=$("#PoRefNo").val();
+//alert(PoRefNo);
+var PoRefDate=$("#PoRefDate").val();
+//alert(PoRefDate);
+var orgCode=$("#orgCode").val();
+ var TotAmtRound = $("#totalAmount").text();
+ alert(TotAmtRound);
+$('#purchaseTable tr:not(:has(th))').each(function() {
+var invDate = $(this).find("td").eq(0).html();
+var supplierName = $(this).find("td").eq(1).html();
+var vehNumber = $(this).find("td").eq(2).html();
+var milkType = $(this).find("td").eq(3).html();
+var quantity =  $(this).find("td").eq(4).html();
+var fatP = $(this).find("td").eq(5).html();
+var snfP = $(this).find("td").eq(6).html();
+var tsRate = $(this).find("td").eq(7).html();
+var ltrRate = $(this).find("td").eq(8).html();
+var amt = $(this).find("td").eq(9).html();
+var paymentStatus = $(this).find("td").eq(10).html();
+var bankrefno = $(this).find("td").eq(11).html();
+var bankIfsc = $(this).find("td").eq(12).html();
+var recDate = $(this).find("td").eq(13).html();
+var suplCode= $(this).find("td").eq(14).html();
+var InvType = $(this).find("td").eq(15).html();
+var Tmode = $(this).find("td").eq(16).html();
+var Unit = $(this).find("td").eq(17).html();
+var PoRefNo = $(this).find("td").eq(18).html();
+var PoRefDate = $(this).find("td").eq(19).html();
+<!--var TotAmtRound = $(this).find("td").eq(20).html();-->
+var orgCode= $(this).find("td").eq(20).html();
+purchaseOrder.push({
+           invDate:invDate,
+           supplier:supplierName,
+           vehNumber:vehNumber,
+           milkType:milkType,
+           quantity:quantity,
+           fatP:fatP,
+           snfP:snfP,
+           tsRate:tsRate,
+           ltrRate :ltrRate,
+           amt :amt,
+           paymentStatus:paymentStatus,
+           bankrefno:bankrefno,
+           bankIfsc:bankIfsc,
+           recDate :recDate,
+           suplCode:suplCode,
+           invType:InvType,
+           tmode:Tmode,
+           unit:Unit,
+           poRefNo:PoRefNo,
+           poRefDate:PoRefDate,
+           orgCode:orgCode,
+           totAmtRound:TotAmtRound
+
+});
+});
+var json = JSON.stringify(purchaseOrder);
+alert(json);
+ $.ajax({
+url: '/purchaseOrderNew',
+    method: 'POST',
+        contentType : 'application/json; charset=utf-8',
+        data: json,
+success: function(data) {
+//alert("Data Saved Successfully !!!");
+window.location.replace ("/purchase");
+<!--window.location.href = "/getPurchase?orderNo=" + $("#orderNo").html();-->
+}
+});
+}); // end
+
+</script>
+</html>
